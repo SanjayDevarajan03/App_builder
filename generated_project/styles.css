@@ -1,0 +1,339 @@
+/*
+  styles.css – ColorfulTodo
+  Implements CSS variables for theming, responsive layout using Grid/Flexbox,
+  and accessible styling for interactive elements.
+*/
+
+/* --------------------------------------------------------------------------
+   Theme variables – light (default) and dark (via .dark class on #app)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Primary brand color */
+  --primary: #4a90e2;          /* blue – good contrast on light bg */
+  --primary-contrast: #ffffff;
+  --primary-hover: #357ab8;   /* darker shade for hover */
+
+  /* Secondary accent */
+  --secondary: #e94e77;        /* pink/red */
+  --secondary-contrast: #ffffff;
+  --secondary-hover: #c43a5e; /* darker shade for hover */
+
+  /* Background and foreground */
+  --background: #f5f7fa;      /* light gray */
+  --surface: #ffffff;         /* cards, inputs */
+  --text-primary: #212529;    /* dark gray – high contrast */
+  --text-secondary: #555555;  /* medium gray */
+
+  /* Border & focus */
+  --border: #ced4da;
+  --focus-ring: #80bdff;      /* light blue */
+
+  /* Transition timing */
+  --transition-duration: 0.3s;
+  --transition-easing: ease-in-out;
+}
+
+/* Dark theme – toggled by adding .dark to #app */
+#app.dark {
+  --primary: #90caf9;          /* lighter blue for dark bg */
+  --primary-contrast: #212529;
+  --primary-hover: #5d99c9;    /* darker for hover */
+
+  --secondary: #f48fb1;        /* softer pink */
+  --secondary-contrast: #212529;
+  --secondary-hover: #c06d93; /* darker for hover */
+
+  --background: #121212;      /* near‑black */
+  --surface: #1e1e1e;         /* dark card background */
+  --text-primary: #e0e0e0;    /* light gray */
+  --text-secondary: #b0b0b0;
+  --border: #333333;
+  --focus-ring: #90caf9;
+}
+
+/* --------------------------------------------------------------------------
+   Global resets & base styles
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#app {
+  width: 100%;
+  max-width: 800px;
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* header, main, footer */
+  gap: 1rem;
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color var(--transition-duration) var(--transition-easing);
+}
+
+/* --------------------------------------------------------------------------
+   Header – flex layout with title and theme toggle button
+   -------------------------------------------------------------------------- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+  border-radius: 0.5rem;
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+#theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Main – form, filters, task list
+   -------------------------------------------------------------------------- */
+main {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Form – flex row on larger screens, column on mobile */
+#todo-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+#todo-form input[type="text"] {
+  flex: 2 1 200px;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+#todo-form input[type="date"] {
+  flex: 1 1 150px;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+#todo-form button[type="submit"] {
+  flex: 0 0 auto;
+  padding: 0.5rem 1rem;
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) var(--transition-easing);
+}
+
+#todo-form button[type="submit"]:hover,
+#todo-form button[type="submit"]:focus-visible {
+  background-color: var(--secondary-hover);
+}
+
+#todo-form button[type="submit"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Filter navigation */
+#filter-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#filter-nav .filter {
+  padding: 0.25rem 0.75rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background-color: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--transition-duration) var(--transition-easing);
+}
+
+#filter-nav .filter:hover,
+#filter-nav .filter:focus-visible {
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+#filter-nav .filter:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+#filter-nav .filter.active {
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+/* Task list */
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing),
+              opacity var(--transition-duration) var(--transition-easing);
+}
+
+.todo-list li:hover {
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+.todo-list li .task-text {
+  flex: 1 1 auto;
+  margin: 0 0.5rem;
+}
+
+.todo-list li.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.todo-list li.completed:hover {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+.todo-list button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.todo-list button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+footer a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+footer a:hover,
+footer a:focus-visible {
+  color: var(--primary-contrast);
+  background-color: var(--primary);
+  outline: 2px solid var(--focus-ring);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility – focus-visible outlines, hidden status region
+   -------------------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  #app {
+    padding: 0.5rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  #todo-form {
+    flex-direction: column;
+  }
+
+  #todo-form input[type="text"],
+  #todo-form input[type="date"],
+  #todo-form button[type="submit"] {
+    flex: none;
+    width: 100%;
+  }
+
+  #filter-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

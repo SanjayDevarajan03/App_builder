@@ -2,39 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorful Todo</title>
-    <!-- Link to the main stylesheet (styles for .todo-app, .header, .main, .footer, etc.) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ColorfulTodo</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Defer script loading to ensure DOM is ready -->
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Root element for the Todo app -->
-    <div id="app" class="todo-app">
-        <!-- Header section with title and input for new todos -->
-        <header class="header">
-            <h1>Colorful Todo</h1>
-            <input id="new-todo" class="new-todo" placeholder="What needs to be done?" autocomplete="off" />
+    <div id="app">
+        <!-- Header with app title and theme selector -->
+        <header role="banner" class="app-header">
+            <h1>ColorfulTodo</h1>
+            <button id="theme-toggle" aria-label="Toggle dark/light theme">🌙/☀️</button>
         </header>
 
-        <!-- Main section where the list of todos will be rendered -->
-        <section class="main">
-            <ul id="todo-list" class="todo-list">
-                <!-- Todo items will be inserted here by script.js -->
-            </ul>
-        </section>
+        <!-- Main content: form, filters, list, and live status region -->
+        <main role="main">
+            <form id="todo-form" aria-label="Add new todo">
+                <input id="todo-input" type="text" placeholder="What needs to be done?" required aria-label="Todo description">
+                <input id="todo-due" type="date" aria-label="Due date">
+                <button type="submit">Add</button>
+            </form>
 
-        <!-- Footer with item count, filter links, and clear completed button -->
-        <footer class="footer">
-            <span id="items-left" class="items-left"></span>
-            <ul class="filters">
-                <li><a href="#" data-filter="all" class="selected">All</a></li>
-                <li><a href="#" data-filter="active">Active</a></li>
-                <li><a href="#" data-filter="completed">Completed</a></li>
-            </ul>
-            <button id="clear-completed" class="clear-completed">Clear completed</button>
+            <nav id="filter-nav" aria-label="Todo filters">
+                <button data-filter="all" class="filter active" aria-pressed="true">All</button>
+                <button data-filter="active" class="filter" aria-pressed="false">Active</button>
+                <button data-filter="completed" class="filter" aria-pressed="false">Completed</button>
+            </nav>
+
+            <!-- Live region for status updates (e.g., item added, completed) -->
+            <div id="status" role="status" aria-live="polite" class="visually-hidden"></div>
+
+            <!-- Task list -->
+            <ul id="todo-list" class="todo-list" role="list" aria-live="polite"></ul>
+        </main>
+
+        <footer role="contentinfo">
+            <p>Made with ❤️ by <a href="https://github.com/yourusername" target="_blank" rel="noopener">Your Name</a></p>
         </footer>
     </div>
+    <script src="app.js" defer></script>
 </body>
 </html>
