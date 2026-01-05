@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Todo</title>
+    <!-- Link to the main stylesheet (styles for .todo-app, .header, .main, .footer, etc.) -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Defer script loading to ensure DOM is ready -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Root element for the Todo app -->
+    <div id="app" class="todo-app">
+        <!-- Header section with title and input for new todos -->
+        <header class="header">
+            <h1>Colorful Todo</h1>
+            <input id="new-todo" class="new-todo" placeholder="What needs to be done?" autocomplete="off" />
+        </header>
+
+        <!-- Main section where the list of todos will be rendered -->
+        <section class="main">
+            <ul id="todo-list" class="todo-list">
+                <!-- Todo items will be inserted here by script.js -->
+            </ul>
+        </section>
+
+        <!-- Footer with item count, filter links, and clear completed button -->
+        <footer class="footer">
+            <span id="items-left" class="items-left"></span>
+            <ul class="filters">
+                <li><a href="#" data-filter="all" class="selected">All</a></li>
+                <li><a href="#" data-filter="active">Active</a></li>
+                <li><a href="#" data-filter="completed">Completed</a></li>
+            </ul>
+            <button id="clear-completed" class="clear-completed">Clear completed</button>
+        </footer>
+    </div>
+</body>
+</html>
